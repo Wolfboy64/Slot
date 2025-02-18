@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+            Setup();
         }
 
         PictureBox one = new PictureBox();
@@ -27,12 +28,20 @@ namespace WindowsFormsApp1
         PictureBox eight = new PictureBox();
         PictureBox nine = new PictureBox();
 
-        Button spin = new Button();
+        public static Button spin = new Button();
 
         public void Setup() 
-        { 
-            
+        {
+            spin.Location = new Point(0,0);
+            spin.AutoSize = true;
+            spin.Text = "Spin";
+            spin.Click += Spin_Click;
+            Controls.Add(spin);
         }
 
+        private void Spin_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
