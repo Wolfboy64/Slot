@@ -41,6 +41,7 @@ namespace WindowsFormsApp1
         List<PictureBox> line2 = new List<PictureBox>() {four, five, six};
         List<PictureBox> line3 = new List<PictureBox>() {seven, eight, nine};
 
+        List<PictureBox> roow1 = new List<PictureBox>() {one, four, seven };
         Label lbl = new Label();
         Label result = new Label();
 
@@ -59,17 +60,14 @@ namespace WindowsFormsApp1
             spin.Click += Spin_Click;
             Controls.Add(spin);
 
-            
-
-
-
-            Controls.Add(plusbet1);
-            Controls.Add(plusbet2);
-            Controls.Add(plusbet3);
-            Controls.Add(zerobet);
-            Controls.Add(minusbet1);
-            Controls.Add(minusbet2);
-            Controls.Add(minusbet3);
+            // Add bet buttons
+            SetupBetButton(plusbet1, new Point(spin.Location.X + 200, spin.Location.Y), "+1", 1);
+            SetupBetButton(plusbet2, new Point(plusbet1.Location.X + 75, plusbet1.Location.Y), "+10000", 10000);
+            SetupBetButton(plusbet3, new Point(plusbet2.Location.X + 75, plusbet2.Location.Y), "+100000", 100000);
+            SetupBetButton(zerobet, new Point(plusbet3.Location.X + 75, plusbet3.Location.Y), "0", 0, true);
+            SetupBetButton(minusbet1, new Point(zerobet.Location.X + 75, zerobet.Location.Y), "-1000", -1000);
+            SetupBetButton(minusbet2, new Point(minusbet1.Location.X + 75, minusbet1.Location.Y), "-10000", -10000);
+            SetupBetButton(minusbet3, new Point(minusbet2.Location.X + 75, minusbet2.Location.Y), "-100000", -100000);
 
             // Setup PictureBoxes
             SetupPictureBox(one, new Point(10, 50));
@@ -84,7 +82,7 @@ namespace WindowsFormsApp1
 
             lbl.Location = new Point(six.Location.X + 200, six.Location.Y + 35);
             lbl.AutoSize = true;
-            lbl.Text = "jelenlegi egyenleged: " + balance.ToString() + 
+            lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
                 "\nJelenlegi tét: " + bet;
             Controls.Add(lbl);
 
@@ -92,6 +90,7 @@ namespace WindowsFormsApp1
             result.AutoSize = true;
             Controls.Add(result);
         }
+
         /*private void Setup(Button button, Point location, string text, int betChange, bool reset = false)
         {
             // Setup the spin button
@@ -175,100 +174,97 @@ namespace WindowsFormsApp1
             int x = 0;
             int y = 0;
             int z = 0;
-            for (int i = 0; i < colors.Count; i++)
+            if (bet != 0)
             {
-                x = rnd.Next(0, colors.Count);
-                y = rnd.Next(0, colors.Count);
-                z = rnd.Next(0, colors.Count);
-
-
-                a = rnd.Next(0, colors.Count);
-                b = rnd.Next(0, colors.Count);
-                c = rnd.Next(0, colors.Count);
-
-                d = rnd.Next(0, colors.Count);
-                f = rnd.Next(0, colors.Count);
-                g = rnd.Next(0, colors.Count);
-
-            }
-            for (int i = 0; i < line1.Count; i++)
-            {
-                line1[0].BackColor = colors[x];
-                line1[1].BackColor = colors[y];
-                line1[2].BackColor = colors[z];
-            }
-            for (int i = 0; i < line2.Count; i++)
-            {
-                line2[0].BackColor = colors[a];
-                line2[1].BackColor = colors[b];
-                line2[2].BackColor = colors[c];
-            }
-            for (int i = 0; i < line3.Count; i++)
-            {
-                line3[0].BackColor = colors[d];
-                line3[1].BackColor = colors[f];
-                line3[2].BackColor = colors[g];
-            }
-            winmoney();
-            losemoney();
-            result.Text = WinCheck();
-        }
-        private string WinCheck() 
-        {
-            string message = "";
-            for (int i = 0; i < line1.Count; i++)
-            {
-                if (line1[0].BackColor == line1[1].BackColor && line1[1].BackColor == line1[2].BackColor)
+                for (int i = 0; i < colors.Count; i++)
                 {
-                    message = "You win!";
-                    
+                    x = rnd.Next(0, colors.Count);
+                    y = rnd.Next(0, colors.Count);
+                    z = rnd.Next(0, colors.Count);
+
+                    a = rnd.Next(0, colors.Count);
+                    b = rnd.Next(0, colors.Count);
+                    c = rnd.Next(0, colors.Count);
+
+                    d = rnd.Next(0, colors.Count);
+                    f = rnd.Next(0, colors.Count);
+                    g = rnd.Next(0, colors.Count);
                 }
-                else 
+                for (int i = 0; i < line1.Count; i++)
                 {
-                    message = "You lose!";
+                    line1[0].BackColor = colors[x];
+                    line1[1].BackColor = colors[y];
+                    line1[2].BackColor = colors[z];
                 }
-            }
-            for (int i = 0; i < line2.Count; i++)
-            {
-                if (line2[0].BackColor == line2[1].BackColor && line2[1].BackColor == line2[2].BackColor)
+                for (int i = 0; i < line2.Count; i++)
                 {
-                    message = "You win!";
+                    line2[0].BackColor = colors[a];
+                    line2[1].BackColor = colors[b];
+                    line2[2].BackColor = colors[c];
+                }
+                for (int i = 0; i < line3.Count; i++)
+                {
+                    line3[0].BackColor = colors[d];
+                    line3[1].BackColor = colors[f];
+                    line3[2].BackColor = colors[g];
+                }
+
+                // Check result and update balance
+                result.Text = WinCheck();
+                if (result.Text == "You win!")
+                {
+                    balance = winmoney();
                 }
                 else
                 {
-                    message = "You lose!";
+                    balance = losemoney();
                 }
+                bet = 0;
+                // Update label text
+                lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
+                            "\nJelenlegi tét: " + bet;
             }
-            for (int i = 0; i < line3.Count; i++)
-            {
-                if (line3[0].BackColor == line3[1].BackColor && line3[1].BackColor == line3[2].BackColor)
-                {
-                    message = "You win!";
-                }
-                else
-                {
-                    message = "You lose!";
-                }
-            }
-            return message;
+            
         }
+
         private int losemoney()
         {
-            int backmoney = 0;
-            if (result.Text == "You lose!") 
-            {
-                backmoney = balance - bet;
-            }
+            int backmoney = balance - bet;
             return backmoney;
         }
+
         private int winmoney()
         {
-            int winmoney = 0;
-            if (result.Text == "You win!")
-            {
-                winmoney = balance + bet;
-            }
+            int winmoney = balance + bet;
             return winmoney;
         }
+
+        private string WinCheck()
+        {
+            // Initialize message with a losing result
+            string message = "You lose!";
+
+            // Check line1
+            if (line1[0].BackColor == line1[1].BackColor && line1[1].BackColor == line1[2].BackColor)
+            {
+                return "You win!";
+            }
+
+            // Check line2
+            if (line2[0].BackColor == line2[1].BackColor && line2[1].BackColor == line2[2].BackColor)
+            {
+                return "You win!";
+            }
+
+            // Check line3
+            if (line3[0].BackColor == line3[1].BackColor && line3[1].BackColor == line3[2].BackColor)
+            {
+                return "You win!";
+            }
+
+            // Return the result
+            return message;
+        }
+
     }
 }
