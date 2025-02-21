@@ -95,6 +95,7 @@ namespace WindowsFormsApp1
             Controls.Add(result);
 
             FontSetup();
+            Loan();
         }
 
         private void FontSetup() 
@@ -145,105 +146,105 @@ namespace WindowsFormsApp1
             System.Drawing.Image.FromFile("icon4.png"),
 
         };
-            private void Spin_Click(object sender, EventArgs e)
+        private void Spin_Click(object sender, EventArgs e)
+        {
+            int a = 0;
+            int b = 0;
+            int c = 0;
+
+            int d = 0;
+            int f = 0;
+            int g = 0;
+
+            int x = 0;
+            int y = 0;
+            int z = 0;
+
+            if (bet != 0)
             {
-                int a = 0;
-                int b = 0;
-                int c = 0;
-
-                int d = 0;
-                int f = 0;
-                int g = 0;
-
-                int x = 0;
-                int y = 0;
-                int z = 0;
-
-                if (bet != 0)
+                for (int i = 0; i < icons.Count; i++)
                 {
-                    for (int i = 0; i < icons.Count; i++)
-                    {
-                        x = rnd.Next(0, icons.Count);
-                        y = rnd.Next(0, icons.Count);
-                        z = rnd.Next(0, icons.Count);
+                    x = rnd.Next(0, icons.Count);
+                    y = rnd.Next(0, icons.Count);
+                    z = rnd.Next(0, icons.Count);
 
-                        a = rnd.Next(0, icons.Count);
-                        b = rnd.Next(0, icons.Count);
-                        c = rnd.Next(0, icons.Count);
+                    a = rnd.Next(0, icons.Count);
+                    b = rnd.Next(0, icons.Count);
+                    c = rnd.Next(0, icons.Count);
 
-                        d = rnd.Next(0, icons.Count);
-                        f = rnd.Next(0, icons.Count);
-                        g = rnd.Next(0, icons.Count);
-                    }
+                    d = rnd.Next(0, icons.Count);
+                    f = rnd.Next(0, icons.Count);
+                    g = rnd.Next(0, icons.Count);
+                }
 
-                    for (int i = 0; i < line1.Count; i++)
-                    {
-                        line1[0].Image = icons[x];
-                        line1[1].Image = icons[y];
-                        line1[2].Image = icons[z];
-                    }
-                    for (int i = 0; i < line2.Count; i++)
-                    {
-                        line2[0].Image = icons[a];
-                        line2[1].Image = icons[b];
-                        line2[2].Image = icons[c];
-                    }
-                    for (int i = 0; i < line3.Count; i++)
-                    {
-                        line3[0].Image = icons[d];
-                        line3[1].Image = icons[f];
-                        line3[2].Image = icons[g];
-                    }
+                for (int i = 0; i < line1.Count; i++)
+                {
+                    line1[0].Image = icons[x];
+                    line1[1].Image = icons[y];
+                    line1[2].Image = icons[z];
+                }
+                for (int i = 0; i < line2.Count; i++)
+                {
+                    line2[0].Image = icons[a];
+                    line2[1].Image = icons[b];
+                    line2[2].Image = icons[c];
+                }
+                for (int i = 0; i < line3.Count; i++)
+                {
+                    line3[0].Image = icons[d];
+                    line3[1].Image = icons[f];
+                    line3[2].Image = icons[g];
+                }
 
-                    // Check result and update balance
-                    result.Text = WinCheck();
+                // Check result and update balance
+                result.Text = WinCheck();
         
-                    // Ha nyert, a nyereményhez adódik hozzá
-                    if (result.Text == "You win!")
-                    {
-                        balance = winmoney(); 
-                    }
-                    else
-                    {
-                        balance = losemoney(); 
-                    }
+                // Ha nyert, a nyereményhez adódik hozzá
+                if (result.Text == "You win!")
+                {
+                    balance = winmoney(); 
+                }
+                else
+                {
+                    balance = losemoney(); 
+                }
 
-                    bet = 0;
-                    string print = "";
-                    if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
-                    {
-                        print = "Nyert összeg: " + winningmoney.ToString();
-                    }
-                    else 
-                    {
-                        print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
-                    }
-                    // Frissítjük a nyereményeket és veszteségeket
-                    lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
-                                "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
+                bet = 0;
+                string print = "";
+                if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
+                {
+                    print = "Nyert összeg: " + winningmoney.ToString();
+                }
+                else 
+                {
+                    print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
+                }
+                // Frissítjük a nyereményeket és veszteségeket
+                lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
+                            "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
                                 
 	        
                                 
 
-                }
             }
+        }
 
-            public int winningmoney;
-            public int losingmoney;
+        public int winningmoney;
+        public int losingmoney;
 
-            private int losemoney()
-            {
-                int backmoney = balance - bet; // Calculate the balance after losing the bet
-                losingmoney = bet;  // A veszteség az adott tét, hiszen a játékos elbukta a tétet
-                return backmoney;  // Return the updated balance
-            }
+        private int losemoney()
+        {
+            int backmoney = balance - bet; // Calculate the balance after losing the bet
+            losingmoney = bet;  // A veszteség az adott tét, hiszen a játékos elbukta a tétet
+            return backmoney;  // Return the updated balance
+        }
 
-            private int winmoney()
-            {
-                int Winmoney = balance + bet; // Calculate the balance after winning the bet
-                winningmoney = bet;  // A nyeremény az adott tét, mivel a játékos ennyit nyert
-                return Winmoney;  // Return the updated balance
-            }
+        private int winmoney()
+        {
+            int Winmoney = balance + bet; // Calculate the balance after winning the bet
+            winningmoney = bet;  // A nyeremény az adott tét, mivel a játékos ennyit nyert
+            return Winmoney;  // Return the updated balance
+        }
 
 
         private string WinCheck()
@@ -310,8 +311,21 @@ namespace WindowsFormsApp1
             }
             return false;
         }
-             
+        public int Loanbalance;
+        Button Loanbtn = new Button();
+        private void Loan()
+        { 
+            Loanbtn.Location = new Point(minusbet3.Location.X + 400);
+            Loanbtn.Text = "Hitel felvétele";
+            Loanbtn.Click += Loanbtn_Click;
+            Loanbtn.AutoSize = true;
+            Controls.Add(Loanbtn);
+        }
 
+        private void Loanbtn_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
     public partial class Form2 : Form 
     {
@@ -347,5 +361,22 @@ namespace WindowsFormsApp1
 
     
     
+    }
+    public partial class Form3 : Form 
+    {
+        public Form3()
+        {
+            Setup();
+        }
+        Label lbl = new Label();
+        private void Setup()
+        {
+            this.Size = new Size(400, 500);
+            lbl.Location = new Point(10, 30);
+            lbl.Text = "Hitel összege: ";
+            lbl.AutoSize = true;
+            Controls.Add(lbl);
+        }
+
     }
 }
