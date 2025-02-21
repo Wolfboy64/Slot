@@ -9,7 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Text;
-using static System.Net.Mime.MediaTypeNames;
+
+
 
 namespace WindowsFormsApp1
 {
@@ -43,6 +44,8 @@ namespace WindowsFormsApp1
         List<PictureBox> line3 = new List<PictureBox>() {seven, eight, nine};
 
         List<PictureBox> roow1 = new List<PictureBox>() {one, four, seven };
+        List<PictureBox> roow2 = new List<PictureBox>() {two, five, eight };
+        List<PictureBox> roow3 = new List<PictureBox>() {three, six, nine };
         Label lbl = new Label();
         Label result = new Label();
 
@@ -87,7 +90,7 @@ namespace WindowsFormsApp1
                 "\nJelenlegi tét: " + bet;
             Controls.Add(lbl);
 
-            result.Location = new Point(lbl.Location.X, lbl.Location.Y + 50);
+            result.Location = new Point(lbl.Location.X, lbl.Location.Y + 500);
             result.AutoSize = true;
             Controls.Add(result);
 
@@ -100,8 +103,8 @@ namespace WindowsFormsApp1
             pfc.AddFontFile("Font/BungeeSpice-Regular.ttf");
             lbl.Font = new Font(pfc.Families[0], 25, FontStyle.Regular);
             lbl.ForeColor = Color.DarkBlue;
-            //lbl.BackColor = Color.Orange;
-        
+
+            result.Font = new Font(pfc.Families[0], 25, FontStyle.Regular);
         }
 
         private void SetupBetButton(Button button, Point location, string text, int betChange, bool reset = false)
@@ -134,112 +137,215 @@ namespace WindowsFormsApp1
         }
         public Random rnd = new Random();
         List<Color> colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Black };
-        private void Spin_Click(object sender, EventArgs e)
+        List<System.Drawing.Image> icons = new List<System.Drawing.Image>() 
         {
-            int a = 0;
-            int b = 0;
-            int c = 0;
+            System.Drawing.Image.FromFile("icon1.png"), 
+            System.Drawing.Image.FromFile("icon2.png"), 
+            //System.Drawing.Image.FromFile("icon3.png"),
+            System.Drawing.Image.FromFile("icon4.png"),
 
-            int d = 0;
-            int f = 0;
-            int g = 0;
-
-            int x = 0;
-            int y = 0;
-            int z = 0;
-            if (bet != 0)
+        };
+            private void Spin_Click(object sender, EventArgs e)
             {
-                for (int i = 0; i < colors.Count; i++)
-                {
-                    x = rnd.Next(0, colors.Count);
-                    y = rnd.Next(0, colors.Count);
-                    z = rnd.Next(0, colors.Count);
+                int a = 0;
+                int b = 0;
+                int c = 0;
 
-                    a = rnd.Next(0, colors.Count);
-                    b = rnd.Next(0, colors.Count);
-                    c = rnd.Next(0, colors.Count);
+                int d = 0;
+                int f = 0;
+                int g = 0;
 
-                    d = rnd.Next(0, colors.Count);
-                    f = rnd.Next(0, colors.Count);
-                    g = rnd.Next(0, colors.Count);
-                }
-                for (int i = 0; i < line1.Count; i++)
-                {
-                    line1[0].BackColor = colors[x];
-                    line1[1].BackColor = colors[y];
-                    line1[2].BackColor = colors[z];
-                }
-                for (int i = 0; i < line2.Count; i++)
-                {
-                    line2[0].BackColor = colors[a];
-                    line2[1].BackColor = colors[b];
-                    line2[2].BackColor = colors[c];
-                }
-                for (int i = 0; i < line3.Count; i++)
-                {
-                    line3[0].BackColor = colors[d];
-                    line3[1].BackColor = colors[f];
-                    line3[2].BackColor = colors[g];
-                }
+                int x = 0;
+                int y = 0;
+                int z = 0;
 
-                // Check result and update balance
-                result.Text = WinCheck();
-                if (result.Text == "You win!")
+                if (bet != 0)
                 {
-                    balance = winmoney();
+                    for (int i = 0; i < icons.Count; i++)
+                    {
+                        x = rnd.Next(0, icons.Count);
+                        y = rnd.Next(0, icons.Count);
+                        z = rnd.Next(0, icons.Count);
+
+                        a = rnd.Next(0, icons.Count);
+                        b = rnd.Next(0, icons.Count);
+                        c = rnd.Next(0, icons.Count);
+
+                        d = rnd.Next(0, icons.Count);
+                        f = rnd.Next(0, icons.Count);
+                        g = rnd.Next(0, icons.Count);
+                    }
+
+                    for (int i = 0; i < line1.Count; i++)
+                    {
+                        line1[0].Image = icons[x];
+                        line1[1].Image = icons[y];
+                        line1[2].Image = icons[z];
+                    }
+                    for (int i = 0; i < line2.Count; i++)
+                    {
+                        line2[0].Image = icons[a];
+                        line2[1].Image = icons[b];
+                        line2[2].Image = icons[c];
+                    }
+                    for (int i = 0; i < line3.Count; i++)
+                    {
+                        line3[0].Image = icons[d];
+                        line3[1].Image = icons[f];
+                        line3[2].Image = icons[g];
+                    }
+
+                    // Check result and update balance
+                    result.Text = WinCheck();
+        
+                    // Ha nyert, a nyereményhez adódik hozzá
+                    if (result.Text == "You win!")
+                    {
+                        balance = winmoney(); 
+                    }
+                    else
+                    {
+                        balance = losemoney(); 
+                    }
+
+                    bet = 0;
+                    string print = "";
+                    if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
+                    {
+                        print = "Nyert összeg: " + winningmoney.ToString();
+                    }
+                    else 
+                    {
+                        print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
+                    }
+                    // Frissítjük a nyereményeket és veszteségeket
+                    lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
+                                "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
+                                
+	        
+                                
+
                 }
-                else
-                {
-                    balance = losemoney();
-                }
-                bet = 0;
-                // Update label text
-                
-                lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
-                            "\nJelenlegi tét: " + bet;
-                
             }
-            
-        }
 
-        private int losemoney()
-        {
-            int backmoney = balance - bet;
-            return backmoney;
-        }
+            public int winningmoney;
+            public int losingmoney;
 
-        private int winmoney()
-        {
-            int winmoney = balance + bet;
-            return winmoney;
-        }
+            private int losemoney()
+            {
+                int backmoney = balance - bet; // Calculate the balance after losing the bet
+                losingmoney = bet;  // A veszteség az adott tét, hiszen a játékos elbukta a tétet
+                return backmoney;  // Return the updated balance
+            }
+
+            private int winmoney()
+            {
+                int Winmoney = balance + bet; // Calculate the balance after winning the bet
+                winningmoney = bet;  // A nyeremény az adott tét, mivel a játékos ennyit nyert
+                return Winmoney;  // Return the updated balance
+            }
+
 
         private string WinCheck()
         {
             // Initialize message with a losing result
             string message = "You lose!";
 
-            // Check line1
-            if (line1[0].BackColor == line1[1].BackColor && line1[1].BackColor == line1[2].BackColor)
-            {
+            if (LineChecker() == true && RowChecker() == true)
+	        {
                 return "You win!";
+                winmoney();
+	        }
+            else if (LineChecker() == true)
+	        {
+                return "You win!";
+                winmoney();
+	        }
+            else if (RowChecker() == true) 
+            {   
+                return "You win!";
+                winmoney();
             }
 
-            // Check line2
-            if (line2[0].BackColor == line2[1].BackColor && line2[1].BackColor == line2[2].BackColor)
-            {
-                return "You win!";
-            }
+            
 
-            // Check line3
-            if (line3[0].BackColor == line3[1].BackColor && line3[1].BackColor == line3[2].BackColor)
-            {
-                return "You win!";
-            }
 
             // Return the result
             return message;
         }
+        private bool LineChecker() 
+        {
+            // Check line1
+            if (line1[0].Image == line1[1].Image && line1[1].Image == line1[2].Image)
+            {
+                return true;
+            }
 
+            // Check line2
+            if (line2[0].Image == line2[1].Image && line2[1].Image == line2[2].Image)
+            {
+                return true;
+            }
+
+            // Check line3
+            if (line3[0].Image == line3[1].Image && line3[1].Image == line3[2].Image)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool RowChecker() 
+        {
+            if (roow1[0].Image == roow1[1].Image && roow1[1].Image == roow1[2].Image)
+            {
+                return true;
+            }
+            if (roow2[0].Image == roow2[1].Image && roow2[1].Image == roow2[2].Image)
+            {
+                return true;
+            }
+            if (roow3[0].Image == roow3[1].Image && roow3[1].Image == roow3[2].Image)
+            {
+                return true;
+            }
+            return false;
+        }
+             
+
+    }
+    public partial class Form2 : Form 
+    {
+        public Form2() 
+        {
+            Setup();
+        }
+        public Button btn = new Button();
+        private void Setup() 
+        {
+            this.Size = new Size(400, 500);
+            btn.Location = new Point(10,30);
+            btn.Size = new Size(200, 25);
+            btn.Text = "Start";
+            btn.Click += btn_Click;
+
+            Controls.Add(btn);
+
+            
+        }
+        
+        private void btn_Click(object sender, EventArgs e) 
+        {
+            // Form2 bezárása
+            Form1 form = new Form1();
+            Form2 form2 = new Form2();
+            form2.Close();
+
+            form2.Hide();
+            form.Show();
+        }
+
+
+    
+    
     }
 }
