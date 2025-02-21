@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Text;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WindowsFormsApp1
@@ -89,47 +90,19 @@ namespace WindowsFormsApp1
             result.Location = new Point(lbl.Location.X, lbl.Location.Y + 50);
             result.AutoSize = true;
             Controls.Add(result);
+
+            FontSetup();
         }
 
-        /*private void Setup(Button button, Point location, string text, int betChange, bool reset = false)
+        private void FontSetup() 
         {
-            // Setup the spin button
-            spin.Location = new Point(0, 0);
-            spin.AutoSize = true;
-            spin.Text = "Spin";
-            spin.Click += Spin_Click;
-            Controls.Add(spin);
-
-            // Setup bet buttons
-            SetupBetButton(plusbet1, new Point(spin.Location.X + 200, spin.Location.Y), "+1", 1);
-            SetupBetButton(plusbet2, new Point(plusbet1.Location.X + 75, plusbet1.Location.Y), "+10000", 10000);
-            SetupBetButton(plusbet3, new Point(plusbet2.Location.X + 75, plusbet2.Location.Y), "+100000", 100000);
-            SetupBetButton(zerobet, new Point(plusbet3.Location.X + 75, plusbet3.Location.Y), "0", 0, true);
-            SetupBetButton(minusbet1, new Point(zerobet.Location.X + 75, zerobet.Location.Y), "-1000", -1000);
-            SetupBetButton(minusbet2, new Point(minusbet1.Location.X + 75, minusbet1.Location.Y), "-10000", -10000);
-            SetupBetButton(minusbet3, new Point(minusbet2.Location.X + 75, minusbet2.Location.Y), "-100000", -100000);
-
-            // Setup PictureBoxes
-            SetupPictureBox(one, new Point(10, 50));
-            SetupPictureBox(two, new Point(120, 50));
-            SetupPictureBox(three, new Point(230, 50));
-            SetupPictureBox(four, new Point(10, 160));
-            SetupPictureBox(five, new Point(120, 160));
-            SetupPictureBox(six, new Point(230, 160));
-            SetupPictureBox(seven, new Point(10, 270));
-            SetupPictureBox(eight, new Point(120, 270));
-            SetupPictureBox(nine, new Point(230, 270));
-
-            lbl.Location = new Point(six.Location.X + 200, six.Location.Y + 35);
-            lbl.AutoSize = true;
-            lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
-                "\nJelenlegi tét: " + bet;
-            Controls.Add(lbl);
-
-            result.Location = new Point(lbl.Location.X, lbl.Location.Y + 50);
-            result.AutoSize = true;
-            Controls.Add(result);
-        }*/
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddFontFile("Font/BungeeSpice-Regular.ttf");
+            lbl.Font = new Font(pfc.Families[0], 25, FontStyle.Regular);
+            lbl.ForeColor = Color.DarkBlue;
+            //lbl.BackColor = Color.Orange;
+        
+        }
 
         private void SetupBetButton(Button button, Point location, string text, int betChange, bool reset = false)
         {
@@ -221,8 +194,10 @@ namespace WindowsFormsApp1
                 }
                 bet = 0;
                 // Update label text
+                
                 lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
                             "\nJelenlegi tét: " + bet;
+                
             }
             
         }
