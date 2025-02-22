@@ -142,10 +142,15 @@ namespace WindowsFormsApp1
         {
             System.Drawing.Image.FromFile("icon1.png"), 
             System.Drawing.Image.FromFile("icon2.png"), 
-            //System.Drawing.Image.FromFile("icon3.png"),
+            System.Drawing.Image.FromFile("icon3.png"),
             System.Drawing.Image.FromFile("icon4.png"),
+            System.Drawing.Image.FromFile("icon5.png"),
+            System.Drawing.Image.FromFile("icon6.png"),
+            System.Drawing.Image.FromFile("icon7.png"),
+            System.Drawing.Image.FromFile("icon8.png"),
 
         };
+        
         private void Spin_Click(object sender, EventArgs e)
         {
             int a = 0;
@@ -162,72 +167,59 @@ namespace WindowsFormsApp1
 
             if (bet != 0)
             {
-                for (int i = 0; i < icons.Count; i++)
-                {
-                    x = rnd.Next(0, icons.Count);
-                    y = rnd.Next(0, icons.Count);
-                    z = rnd.Next(0, icons.Count);
+                x = rnd.Next(0, icons.Count);
+                y = rnd.Next(0, icons.Count);
+                z = rnd.Next(0, icons.Count);
 
-                    a = rnd.Next(0, icons.Count);
-                    b = rnd.Next(0, icons.Count);
-                    c = rnd.Next(0, icons.Count);
+                a = rnd.Next(0, icons.Count);
+                b = rnd.Next(0, icons.Count);
+                c = rnd.Next(0, icons.Count);
 
-                    d = rnd.Next(0, icons.Count);
-                    f = rnd.Next(0, icons.Count);
-                    g = rnd.Next(0, icons.Count);
-                }
+                d = rnd.Next(0, icons.Count);
+                f = rnd.Next(0, icons.Count);
+                g = rnd.Next(0, icons.Count);
 
-                for (int i = 0; i < line1.Count; i++)
-                {
-                    line1[0].Image = icons[x];
-                    line1[1].Image = icons[y];
-                    line1[2].Image = icons[z];
-                }
-                for (int i = 0; i < line2.Count; i++)
-                {
-                    line2[0].Image = icons[a];
-                    line2[1].Image = icons[b];
-                    line2[2].Image = icons[c];
-                }
-                for (int i = 0; i < line3.Count; i++)
-                {
-                    line3[0].Image = icons[d];
-                    line3[1].Image = icons[f];
-                    line3[2].Image = icons[g];
-                }
+                line1[0].Image = icons[x];
+                line1[1].Image = icons[y];
+                line1[2].Image = icons[z];
+
+                line2[0].Image = icons[a];
+                line2[1].Image = icons[b];
+                line2[2].Image = icons[c];
+
+                line3[0].Image = icons[d];
+                line3[1].Image = icons[f];
+                line3[2].Image = icons[g];
 
                 // Check result and update balance
                 result.Text = WinCheck();
-        
+
                 // Ha nyert, a nyereményhez adódik hozzá
                 if (result.Text == "You win!")
                 {
-                    balance = winmoney(); 
+                    balance = winmoney();
                 }
                 else
                 {
-                    balance = losemoney(); 
+                    balance = losemoney();
                 }
 
                 bet = 0;
                 string print = "";
-                if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
+                if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker() == true)
                 {
                     print = "Nyert összeg: " + winningmoney.ToString();
                 }
-                else 
+                else
                 {
                     print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
                 }
                 // Frissítjük a nyereményeket és veszteségeket
                 lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
-                            "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
-                                
-	        
-                                
-
+                            "\nJelenlegi tét: " + bet.ToString() + "\n" + print;
             }
         }
+
 
         public int winningmoney;
         public int losingmoney;
@@ -324,7 +316,8 @@ namespace WindowsFormsApp1
 
         private void Loanbtn_Click(object sender, EventArgs e)
         {
-            
+            Form3 form3 = new Form3();
+            form3.Show();
         }
     }
     public partial class Form2 : Form 
