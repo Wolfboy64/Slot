@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Text;
 using System.Media;
+using System.IO;
 
 
 
@@ -140,9 +141,10 @@ namespace WindowsFormsApp1
         List<Color> colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Black };
         List<System.Drawing.Image> icons = new List<System.Drawing.Image>() 
         {
+            
             System.Drawing.Image.FromFile("icon1.png"), 
             System.Drawing.Image.FromFile("icon2.png"), 
-            //System.Drawing.Image.FromFile("icon3.png"),
+            System.Drawing.Image.FromFile("icon3.png"),
             System.Drawing.Image.FromFile("icon4.png"),
 
         };
@@ -317,52 +319,56 @@ namespace WindowsFormsApp1
              
 
     }
-    public partial class Form2 : Form 
+    public partial class Form2 : Form
     {
-        public Form2() 
+        public Form2()
         {
             Setup();
         }
+
         public Button btn = new Button();
-        string filepath = "sound/sound.wav";
-        SoundPlayer sound = new SoundPlayer();
-        private void Setup() 
+        string filepath = Path.Combine(Application.StartupPath, "sound", "sound.wav");
+        SoundPlayer sound;
+
+        private void Setup()
         {
             this.Size = new Size(400, 500);
-            btn.Location = new Point(10,30);
+            btn.Location = new Point(10, 30);
             btn.Size = new Size(200, 25);
             btn.Text = "Start";
             btn.Click += btn_Click;
             Controls.Add(btn);
 
-            SoundStart();
+            // Hangfájl betöltése
+            if (File.Exists(filepath))
+            {
+                sound = new SoundPlayer(filepath);
+                sound.Load();
+                SoundStart();
+            }
+            else
+            {
+                MessageBox.Show("Hibás fájl elérési útvonal vagy hiányzó fájl: " + filepath);
+            }
         }
-        public void SoundStart() 
+
+        public void SoundStart()
         {
             sound.Play();
-            //MessageBox.Show("aktuális zene: " + filepath);
+            MessageBox.Show("Aktuális zene: " + filepath);
         }
-        public void SoundStop() 
+
+        public void SoundStop()
         {
             sound.Stop();
-        
         }
-       
-        private void btn_Click(object sender, EventArgs e) 
+
+        private void btn_Click(object sender, EventArgs e)
         {
-            // Form2 bezárása
-            Form1 form = new Form1();
-            Form2 form2 = new Form2();
-            form2.Close();
-
             SoundStop();
-
-            form2.Hide();
+            Form1 form = new Form1();
+            //this.Close(); // Az aktuális ablakot zárja be
             form.Show();
         }
-
-
-    
-    
     }
 }
