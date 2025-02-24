@@ -321,7 +321,8 @@ namespace WindowsFormsApp1
             Setup();
         }
         public Button btn = new Button();
-        SoundPlayer sound;
+        string filepath = "sound/sound.wav";
+        SoundPlayer sound = new SoundPlayer();
         private void Setup() 
         {
             this.Size = new Size(400, 500);
@@ -329,30 +330,29 @@ namespace WindowsFormsApp1
             btn.Size = new Size(200, 25);
             btn.Text = "Start";
             btn.Click += btn_Click;
-
-            sound = new SoundPlayer("sound/sound.mp3");
-
             Controls.Add(btn);
 
-            
+            SoundStart();
         }
         public void SoundStart() 
         {
             sound.Play();
-        
+            MessageBox.Show("aktuális zene: " + filepath);
         }
         public void SoundStop() 
         {
             sound.Stop();
         
         }
-        
+       
         private void btn_Click(object sender, EventArgs e) 
         {
             // Form2 bezárása
             Form1 form = new Form1();
             Form2 form2 = new Form2();
             form2.Close();
+
+            SoundStop();
 
             form2.Hide();
             form.Show();
