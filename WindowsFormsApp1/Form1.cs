@@ -107,7 +107,7 @@ namespace WindowsFormsApp1
 
             result.Font = new Font(pfc.Families[0], 25, FontStyle.Regular);
         }
-
+        int winpiece;
         private void SetupBetButton(Button button, Point location, string text, int betChange, bool reset = false)
         {
             button.Location = location;
@@ -251,20 +251,23 @@ namespace WindowsFormsApp1
         {
             // Initialize message with a losing result
             string message = "You lose!";
-
+            winpiece = 0;
             if (LineChecker() == true && RowChecker() == true)
 	        {
                 return "You win!";
+                winpiece += 2;
                 winmoney();
 	        }
             else if (LineChecker() == true)
 	        {
                 return "You win!";
+                winpiece += 1;
                 winmoney();
 	        }
             else if (RowChecker() == true) 
             {   
                 return "You win!";
+                winpiece += 1;
                 winmoney();
             }
 
@@ -337,7 +340,7 @@ namespace WindowsFormsApp1
         public void SoundStart() 
         {
             sound.Play();
-            MessageBox.Show("aktuális zene: " + filepath);
+            //MessageBox.Show("aktuális zene: " + filepath);
         }
         public void SoundStop() 
         {
