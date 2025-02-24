@@ -25,6 +25,8 @@ namespace WindowsFormsApp1
         Button minusbet1 = new Button();
         Button minusbet2 = new Button();
         Button minusbet3 = new Button();
+
+        Button Hitel = new Button();
         public Form1()
         {
             InitializeComponent();
@@ -65,6 +67,12 @@ namespace WindowsFormsApp1
             spin.Text = "Spin";
             spin.Click += Spin_Click;
             Controls.Add(spin);
+
+            Hitel.Text = "Hitel felvétele: ";
+            Hitel.Location = new Point(spin.Location.X + 200, minusbet2.Location.Y);
+            Hitel.AutoSize = true;
+            Controls.Add(Hitel);
+
 
             // Add bet buttons
             SetupBetButton(plusbet1, new Point(spin.Location.X + 200, spin.Location.Y), "+1", 1);
@@ -370,5 +378,32 @@ namespace WindowsFormsApp1
             //this.Close(); // Az aktuális ablakot zárja be
             form.Show();
         }
+    }
+    public partial class Form3 : Form
+    {
+        Label lbl = new Label();
+        public Form3()
+        {
+            Setup();
+        }
+        public void Setup() 
+        {
+            this.AutoSize = true;
+            this.Text = "Hitel felvétel";
+
+            lbl.Text = "Hitel felvétele";
+            lbl.Location = new Point(10, 10);
+            lbl.AutoSize = true;
+            Controls.Add(lbl);
+
+
+        }
+    
+    
+    
+    
+    
+    
+    
     }
 }
