@@ -69,7 +69,7 @@ namespace WindowsFormsApp1
             Controls.Add(spin);
 
             Hitel.Text = "Hitel felvétele: ";
-            Hitel.Location = new Point(spin.Location.X + 200, minusbet2.Location.Y);
+            Hitel.Location = new Point(spin.Location.X + 150, minusbet2.Location.Y);
             Hitel.AutoSize = true;
             Controls.Add(Hitel);
 
@@ -337,15 +337,23 @@ namespace WindowsFormsApp1
         public Button btn = new Button();
         string filepath = Path.Combine(Application.StartupPath, "sound", "sound.wav");
         SoundPlayer sound;
-
+        PictureBox mainmenu = new PictureBox();
         private void Setup()
         {
+            
             this.Size = new Size(400, 500);
             btn.Location = new Point(10, 30);
-            btn.Size = new Size(200, 25);
+            btn.Size = new Size(350, 25);
             btn.Text = "Start";
             btn.Click += btn_Click;
             Controls.Add(btn);
+
+            mainmenu.Image = Image.FromFile("Casiiii.gif");
+            mainmenu.Size = this.Size;
+            mainmenu.Location = this.Location;
+            Controls.Add(mainmenu);
+            mainmenu.SendToBack();
+            mainmenu.SizeMode = PictureBoxSizeMode.StretchImage;
 
             // Hangfájl betöltése
             if (File.Exists(filepath))
@@ -362,7 +370,7 @@ namespace WindowsFormsApp1
 
         public void SoundStart()
         {
-            sound.Play();
+            sound.PlayLooping();
             MessageBox.Show("Aktuális zene: " + filepath);
         }
 
