@@ -71,6 +71,11 @@ namespace WindowsFormsApp1
             Hitel.Text = "Hitel felvétele: ";
             Hitel.Location = new Point(spin.Location.X + 150, minusbet2.Location.Y);
             Hitel.AutoSize = true;
+            Hitel.Click += (sender, e) =>
+            {
+                Form3 form = new Form3();
+                form.Show();
+            };
             Controls.Add(Hitel);
 
 
@@ -381,7 +386,7 @@ namespace WindowsFormsApp1
 
         private void btn_Click(object sender, EventArgs e)
         {
-            SoundStop();
+            
             Form1 form = new Form1();
             //this.Close(); // Az aktuális ablakot zárja be
             form.Show();
@@ -390,6 +395,7 @@ namespace WindowsFormsApp1
     public partial class Form3 : Form
     {
         Label lbl = new Label();
+        Button btn = new Button();
         public Form3()
         {
             Setup();
@@ -399,19 +405,20 @@ namespace WindowsFormsApp1
             this.AutoSize = true;
             this.Text = "Hitel felvétel";
 
+
             lbl.Text = "Hitel felvétele";
             lbl.Location = new Point(10, 10);
             lbl.AutoSize = true;
             Controls.Add(lbl);
 
+            btn.Text = "Hitel felvétele";
+            btn.AutoSize = true;
+            btn.Location = new Point(lbl.Location.X + 100, lbl.Location.Y);
+            Controls.Add(btn);
+
+
 
         }
-    
-    
-    
-    
-    
-    
-    
+
     }
 }
