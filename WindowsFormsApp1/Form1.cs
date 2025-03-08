@@ -378,10 +378,7 @@ namespace WindowsFormsApp1
         }
         private bool RowChecker() 
         {
-            for (int i = 0; i < allpic.Count; i++)
-            {
-                allpic[i].BackColor = Color.White;
-            }
+            
             if (roow1[0].Image == roow1[1].Image && roow1[1].Image == roow1[2].Image)
             {
                 for (int i = 0; i < roow1.Count; i++)
