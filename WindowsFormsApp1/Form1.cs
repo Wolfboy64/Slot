@@ -53,7 +53,9 @@ namespace WindowsFormsApp1
         Label lbl = new Label();
         Label result = new Label();
 
-        
+        TextBox custombet = new TextBox();
+        Label helplabel = new Label();
+
 
 
         public static Button spin = new Button();
@@ -78,6 +80,7 @@ namespace WindowsFormsApp1
             };
             Controls.Add(Hitel);
 
+            
 
             // Add bet buttons
             SetupBetButton(plusbet1, new Point(spin.Location.X + 200, spin.Location.Y), "+1", 1);
@@ -87,6 +90,31 @@ namespace WindowsFormsApp1
             SetupBetButton(minusbet1, new Point(zerobet.Location.X + 75, zerobet.Location.Y), "-1000", -1000);
             SetupBetButton(minusbet2, new Point(minusbet1.Location.X + 75, minusbet1.Location.Y), "-10000", -10000);
             SetupBetButton(minusbet3, new Point(minusbet2.Location.X + 75, minusbet2.Location.Y), "-100000", -100000);
+
+            helplabel.Text = "custom bet (1 - 99999999): ";
+            helplabel.Location = new Point(minusbet3.Location.X + 100, minusbet3.Location.Y + 10);
+            helplabel.AutoSize = true;
+            Controls.Add(helplabel);
+
+            custombet.Location = new Point(minusbet3.Location.X + 235, minusbet3.Location.Y + 5);
+            custombet.Size = new Size(100, 25);
+            custombet.KeyPress += (sender, e) =>
+            {
+                if (e.KeyChar == (char)Keys.Enter)
+                {
+                    if (Regex.IsMatch(custombet.Text, @"^\d+$"))
+                    {
+                        bet = Int32.Parse(custombet.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid input");
+                    }
+                    lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
+                        "\nJelenlegi tét: " + bet;
+                }
+            };
+            Controls.Add(custombet);
 
             // Setup PictureBoxes
             SetupPictureBox(one, new Point(10, 50));
