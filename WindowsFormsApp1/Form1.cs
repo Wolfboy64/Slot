@@ -343,8 +343,6 @@ namespace WindowsFormsApp1
         }
         private bool LineChecker() 
         {
-            
-
             // Check line1
             if (line1[0].Image == line1[1].Image && line1[1].Image == line1[2].Image)
             {
@@ -378,7 +376,6 @@ namespace WindowsFormsApp1
         }
         private bool RowChecker() 
         {
-            
             if (roow1[0].Image == roow1[1].Image && roow1[1].Image == roow1[2].Image)
             {
                 for (int i = 0; i < roow1.Count; i++)
@@ -405,8 +402,6 @@ namespace WindowsFormsApp1
             }
             return false;
         }
-             
-
     }
     public partial class Form2 : Form
     {
