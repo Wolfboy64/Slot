@@ -26,6 +26,8 @@ namespace WindowsFormsApp1
         Button minusbet2 = new Button();
         Button minusbet3 = new Button();
 
+        private Timer spinTimer = new Timer();
+
         Button Hitel = new Button();
         public Form1()
         {
@@ -50,6 +52,7 @@ namespace WindowsFormsApp1
         List<PictureBox> roow1 = new List<PictureBox>() {one, four, seven };
         List<PictureBox> roow2 = new List<PictureBox>() {two, five, eight };
         List<PictureBox> roow3 = new List<PictureBox>() {three, six, nine };
+        List<PictureBox> allpic = new List<PictureBox>() { one, two, three, four, five, six, seven, eight, nine };
         Label lbl = new Label();
         Label result = new Label();
 
@@ -80,7 +83,8 @@ namespace WindowsFormsApp1
             };
             Controls.Add(Hitel);
 
-            
+            spinTimer.Interval = 100; // 100 ms időközönként frissítjük a képeket
+            spinTimer.Tick += SpinTimer_Tick;
 
             // Add bet buttons
             SetupBetButton(plusbet1, new Point(spin.Location.X + 200, spin.Location.Y), "+1", 1);
@@ -139,7 +143,14 @@ namespace WindowsFormsApp1
 
             FontSetup();
         }
-
+        private void SpinTimer_Tick(object sender, EventArgs e)
+        {
+            // Véletlenszerűen változtatjuk a képeket
+            foreach (var pictureBox in line1.Concat(line2).Concat(line3))
+            {
+                pictureBox.Image = icons[rnd.Next(0, icons.Count)];
+            }
+        }
         private void FontSetup() 
         {
             PrivateFontCollection pfc = new PrivateFontCollection();
@@ -189,105 +200,115 @@ namespace WindowsFormsApp1
             System.Drawing.Image.FromFile("icon4.png"),
 
         };
-            private void Spin_Click(object sender, EventArgs e)
+        private async void Spin_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < allpic.Count; i++)
             {
-                int a = 0;
-                int b = 0;
-                int c = 0;
+                allpic[i].BackColor = Color.White;
+            }
+            int a = 0;
+            int b = 0;
+            int c = 0;
 
-                int d = 0;
-                int f = 0;
-                int g = 0;
+            int d = 0;
+            int f = 0;
+            int g = 0;
 
-                int x = 0;
-                int y = 0;
-                int z = 0;
+            int x = 0;
+            int y = 0;
+            int z = 0;
 
-                if (bet != 0)
+            spinTimer.Start(); // Animáció indítása
+
+            // Várunk egy kicsit, hogy az animáció látható legyen
+            await Task.Delay(2000); // 2 másodpercig fut az animáció
+
+            spinTimer.Stop(); // Animáció leállítása
+            if (bet != 0)
+            {
+                for (int i = 0; i < icons.Count; i++)
                 {
-                    for (int i = 0; i < icons.Count; i++)
-                    {
-                        x = rnd.Next(0, icons.Count);
-                        y = rnd.Next(0, icons.Count);
-                        z = rnd.Next(0, icons.Count);
+                    x = rnd.Next(0, icons.Count);
+                    y = rnd.Next(0, icons.Count);
+                    z = rnd.Next(0, icons.Count);
 
-                        a = rnd.Next(0, icons.Count);
-                        b = rnd.Next(0, icons.Count);
-                        c = rnd.Next(0, icons.Count);
+                    a = rnd.Next(0, icons.Count);
+                    b = rnd.Next(0, icons.Count);
+                    c = rnd.Next(0, icons.Count);
 
-                        d = rnd.Next(0, icons.Count);
-                        f = rnd.Next(0, icons.Count);
-                        g = rnd.Next(0, icons.Count);
-                    }
+                    d = rnd.Next(0, icons.Count);
+                    f = rnd.Next(0, icons.Count);
+                    g = rnd.Next(0, icons.Count);
+                }
 
-                    for (int i = 0; i < line1.Count; i++)
-                    {
-                        line1[0].Image = icons[x];
-                        line1[1].Image = icons[y];
-                        line1[2].Image = icons[z];
-                    }
-                    for (int i = 0; i < line2.Count; i++)
-                    {
-                        line2[0].Image = icons[a];
-                        line2[1].Image = icons[b];
-                        line2[2].Image = icons[c];
-                    }
-                    for (int i = 0; i < line3.Count; i++)
-                    {
-                        line3[0].Image = icons[d];
-                        line3[1].Image = icons[f];
-                        line3[2].Image = icons[g];
-                    }
+                for (int i = 0; i < line1.Count; i++)
+                {
+                    line1[0].Image = icons[x];
+                    line1[1].Image = icons[y];
+                    line1[2].Image = icons[z];
+                }
+                for (int i = 0; i < line2.Count; i++)
+                {
+                    line2[0].Image = icons[a];
+                    line2[1].Image = icons[b];
+                    line2[2].Image = icons[c];
+                }
+                for (int i = 0; i < line3.Count; i++)
+                {
+                    line3[0].Image = icons[d];
+                    line3[1].Image = icons[f];
+                    line3[2].Image = icons[g];
+                }
 
-                    // Check result and update balance
-                    result.Text = WinCheck();
+                // Check result and update balance
+                result.Text = WinCheck();
         
-                    // Ha nyert, a nyereményhez adódik hozzá
-                    if (result.Text == "You win!")
-                    {
-                        balance = winmoney(); 
-                    }
-                    else
-                    {
-                        balance = losemoney(); 
-                    }
+                // Ha nyert, a nyereményhez adódik hozzá
+                if (result.Text == "You win!")
+                {
+                    balance = winmoney(); 
+                }
+                else
+                {
+                    balance = losemoney(); 
+                }
 
-                    bet = 0;
-                    string print = "";
-                    if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
-                    {
-                        print = "Nyert összeg: " + winningmoney.ToString();
-                    }
-                    else 
-                    {
-                        print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
-                    }
-                    // Frissítjük a nyereményeket és veszteségeket
-                    lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
-                                "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
+                bet = 0;
+                string print = "";
+                if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
+                {
+                    print = "Nyert összeg: " + winningmoney.ToString();
+                }
+                else 
+                {
+                    print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
+                }
+                // Frissítjük a nyereményeket és veszteségeket
+                lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
+                            "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
                                 
 	        
                                 
 
-                }
             }
+        }
 
-            public int winningmoney;
-            public int losingmoney;
+        public int winningmoney;
+        public int losingmoney;
 
-            private int losemoney()
-            {
-                int backmoney = balance - bet; // Calculate the balance after losing the bet
-                losingmoney = bet;  // A veszteség az adott tét, hiszen a játékos elbukta a tétet
-                return backmoney;  // Return the updated balance
-            }
+        private int losemoney()
+        {
+            int backmoney = balance - bet; // Calculate the balance after losing the bet
+            losingmoney = bet;  // A veszteség az adott tét, hiszen a játékos elbukta a tétet
+            return backmoney;  // Return the updated balance
+        }
 
-            private int winmoney()
-            {
-                int Winmoney = balance + bet; // Calculate the balance after winning the bet
-                winningmoney = bet;  // A nyeremény az adott tét, mivel a játékos ennyit nyert
-                return Winmoney;  // Return the updated balance
-            }
+        private int winmoney()
+        {
+            int Winmoney = balance + bet; // Calculate the balance after winning the bet
+            winningmoney = bet;  // A nyeremény az adott tét, mivel a játékos ennyit nyert
+            return Winmoney;  // Return the updated balance
+        }
 
 
         private string WinCheck()
@@ -322,37 +343,67 @@ namespace WindowsFormsApp1
         }
         private bool LineChecker() 
         {
+            
+
             // Check line1
             if (line1[0].Image == line1[1].Image && line1[1].Image == line1[2].Image)
             {
+                for (int i = 0; i < line1.Count; i++)
+                {
+                    line1[i].BackColor = Color.Yellow;
+                }
                 return true;
             }
 
             // Check line2
             if (line2[0].Image == line2[1].Image && line2[1].Image == line2[2].Image)
             {
+                for (int i = 0; i < line2.Count; i++)
+                {
+                    line2[i].BackColor = Color.Yellow;
+                }
                 return true;
             }
 
             // Check line3
             if (line3[0].Image == line3[1].Image && line3[1].Image == line3[2].Image)
             {
+                for (int i = 0; i < line3.Count; i++)
+                {
+                    line3[i].BackColor = Color.Yellow;
+                }
                 return true;
             }
             return false;
         }
         private bool RowChecker() 
         {
+            for (int i = 0; i < allpic.Count; i++)
+            {
+                allpic[i].BackColor = Color.White;
+            }
             if (roow1[0].Image == roow1[1].Image && roow1[1].Image == roow1[2].Image)
             {
+                for (int i = 0; i < roow1.Count; i++)
+                {
+                    roow1[i].BackColor = Color.Yellow;
+                }
                 return true;
             }
             if (roow2[0].Image == roow2[1].Image && roow2[1].Image == roow2[2].Image)
             {
+                for (int i = 0; i < roow2.Count; i++)
+                {
+                    roow2[i].BackColor = Color.Yellow;
+                }
                 return true;
             }
             if (roow3[0].Image == roow3[1].Image && roow3[1].Image == roow3[2].Image)
             {
+                for (int i = 0; i < roow3.Count; i++)
+                {
+                    roow3[i].BackColor = Color.Yellow;
+                }
                 return true;
             }
             return false;
