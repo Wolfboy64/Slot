@@ -59,7 +59,7 @@ namespace WindowsFormsApp1
         TextBox custombet = new TextBox();
         Label helplabel = new Label();
 
-
+        SoundPlayer jackpot = new SoundPlayer("jackpot.wav");
 
         public static Button spin = new Button();
         int balance = 10000;
@@ -206,6 +206,7 @@ namespace WindowsFormsApp1
             {
                 allpic[i].BackColor = Color.White;
             }
+            jackpot.Stop();
             int a = 0;
             int b = 0;
             int c = 0;
@@ -275,9 +276,11 @@ namespace WindowsFormsApp1
 
                 bet = 0;
                 string print = "";
+                
                 if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
                 {
                     print = "Nyert összeg: " + winningmoney.ToString();
+                    jackpot.Play();
                 }
                 else 
                 {
