@@ -52,6 +52,8 @@ namespace WindowsFormsApp1
         List<PictureBox> roow1 = new List<PictureBox>() {one, four, seven };
         List<PictureBox> roow2 = new List<PictureBox>() {two, five, eight };
         List<PictureBox> roow3 = new List<PictureBox>() {three, six, nine };
+        List<PictureBox> diagonal1 = new List<PictureBox>() {one, five, nine};
+        List<PictureBox> diagonal2 = new List<PictureBox>() {three, five, seven};
         List<PictureBox> allpic = new List<PictureBox>() { one, two, three, four, five, six, seven, eight, nine };
         Label lbl = new Label();
         Label result = new Label();
@@ -263,38 +265,39 @@ namespace WindowsFormsApp1
 
                 // Check result and update balance
                 result.Text = WinCheck();
-        
+
                 // Ha nyert, a nyereményhez adódik hozzá
                 if (result.Text == "You win!")
                 {
-                    balance = winmoney(); 
+                    balance = winmoney();
                 }
                 else
                 {
-                    balance = losemoney(); 
+                    balance = losemoney();
                 }
 
                 bet = 0;
                 string print = "";
-                
-                if ((LineChecker() == true && RowChecker() == true) || LineChecker() == true || RowChecker()==true )
+
+                bool linecheck = LineChecker();
+                bool rowcheck = RowChecker();
+                bool diagonalcheck = diagonalChecker();
+
+                if (linecheck || rowcheck || diagonalcheck || (linecheck && diagonalcheck && rowcheck) || (linecheck && diagonalcheck) || (diagonalcheck && rowcheck) || (rowcheck && linecheck))
                 {
                     print = "Nyert összeg: " + winningmoney.ToString();
                     jackpot.Play();
                 }
-                else 
+                else
                 {
                     print = "Veszített összeg: " + losingmoney.ToString(); // A veszteség helyes kiszámítása
                 }
                 // Frissítjük a nyereményeket és veszteségeket
                 lbl.Text = "jelenlegi egyenleged: " + balance.ToString() +
-                            "\nJelenlegi tét: " + bet.ToString() + "\n" + print; 
-                                
-	        
-                                
-
+                            "\nJelenlegi tét: " + bet.ToString() + "\n" + print;
             }
         }
+
 
         public int winningmoney;
         public int losingmoney;
@@ -319,29 +322,34 @@ namespace WindowsFormsApp1
             // Initialize message with a losing result
             string message = "You lose!";
             winpiece = 0;
-            if (LineChecker() == true && RowChecker() == true)
-	        {
-                return "You win!";
-                winpiece += 2;
-                winmoney();
-	        }
-            else if (LineChecker() == true)
-	        {
-                return "You win!";
-                winpiece += 1;
-                winmoney();
-	        }
-            else if (RowChecker() == true) 
-            {   
-                return "You win!";
-                winpiece += 1;
+
+            // Check for winning combinations
+            bool lineWin = LineChecker();
+            bool rowWin = RowChecker();
+            bool diagonalWin = diagonalChecker();
+
+            if (lineWin && rowWin && diagonalWin)
+            {
+                message = "You win!";
+                winpiece += 3; // Három nyerő kombináció
+            }
+            else if (lineWin && rowWin)
+            {
+                message = "You win!";
+                winpiece += 2; // Két nyerő kombináció
+            }
+            else if (lineWin || rowWin || diagonalWin)
+            {
+                message = "You win!";
+                winpiece += 1; // Egy nyerő kombináció
+            }
+
+            // Ha van nyerő kombináció, hívjuk meg a winmoney() függvényt
+            if (message == "You win!")
+            {
                 winmoney();
             }
 
-            
-
-
-            // Return the result
             return message;
         }
         private bool LineChecker() 
@@ -377,6 +385,30 @@ namespace WindowsFormsApp1
                 win = true;
             }
             return win;
+        }
+        private bool diagonalChecker() 
+        {
+            bool win = false;
+            if (diagonal1[0].Image == diagonal1[1].Image && diagonal1[1].Image == diagonal1[2].Image)
+            {
+                for (int i = 0; i < diagonal1.Count; i++)
+                {
+                    diagonal1[i].BackColor = Color.Yellow;
+                }
+                win = true;
+            }
+            if (diagonal2[0].Image == diagonal2[1].Image && diagonal2[1].Image == diagonal2[2].Image)
+            {
+                for (int i = 0; i < diagonal2.Count; i++)
+                {
+                    diagonal2[i].BackColor = Color.Yellow;
+
+                }
+                win = true;
+            }
+
+            return win;
+        
         }
         private bool RowChecker() 
         {
