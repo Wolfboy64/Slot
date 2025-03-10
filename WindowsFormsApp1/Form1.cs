@@ -196,7 +196,7 @@ namespace WindowsFormsApp1
             
             System.Drawing.Image.FromFile("icon1.png"), 
             System.Drawing.Image.FromFile("icon2.png"), 
-            System.Drawing.Image.FromFile("icon3.png"),
+            //System.Drawing.Image.FromFile("icon3.png"),
             System.Drawing.Image.FromFile("icon4.png"),
 
         };
@@ -346,6 +346,7 @@ namespace WindowsFormsApp1
         }
         private bool LineChecker() 
         {
+            bool win = false;
             // Check line1
             if (line1[0].Image == line1[1].Image && line1[1].Image == line1[2].Image)
             {
@@ -353,7 +354,7 @@ namespace WindowsFormsApp1
                 {
                     line1[i].BackColor = Color.Yellow;
                 }
-                return true;
+                win =  true;
             }
 
             // Check line2
@@ -363,7 +364,7 @@ namespace WindowsFormsApp1
                 {
                     line2[i].BackColor = Color.Yellow;
                 }
-                return true;
+                win = true;
             }
 
             // Check line3
@@ -373,19 +374,20 @@ namespace WindowsFormsApp1
                 {
                     line3[i].BackColor = Color.Yellow;
                 }
-                return true;
+                win = true;
             }
-            return false;
+            return win;
         }
         private bool RowChecker() 
         {
+            bool win = false;
             if (roow1[0].Image == roow1[1].Image && roow1[1].Image == roow1[2].Image)
             {
                 for (int i = 0; i < roow1.Count; i++)
                 {
                     roow1[i].BackColor = Color.Yellow;
                 }
-                return true;
+                win = true;
             }
             if (roow2[0].Image == roow2[1].Image && roow2[1].Image == roow2[2].Image)
             {
@@ -393,7 +395,7 @@ namespace WindowsFormsApp1
                 {
                     roow2[i].BackColor = Color.Yellow;
                 }
-                return true;
+                win = true;
             }
             if (roow3[0].Image == roow3[1].Image && roow3[1].Image == roow3[2].Image)
             {
@@ -401,9 +403,9 @@ namespace WindowsFormsApp1
                 {
                     roow3[i].BackColor = Color.Yellow;
                 }
-                return true;
+                win = true;
             }
-            return false;
+            return win;
         }
     }
     public partial class Form2 : Form
