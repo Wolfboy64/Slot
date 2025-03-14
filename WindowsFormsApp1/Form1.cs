@@ -199,12 +199,13 @@ namespace WindowsFormsApp1
         }
         public Random rnd = new Random();
         List<Color> colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Black };
-        List<System.Drawing.Image> icons = new List<System.Drawing.Image>() 
+        List<System.Drawing.Image> icons = new List<System.Drawing.Image>()
         {
-            
-            System.Drawing.Image.FromFile("icon1.png"), 
+
+            System.Drawing.Image.FromFile("icon1.png"),
             System.Drawing.Image.FromFile("icon2.png"), 
-            //System.Drawing.Image.FromFile("icon3.png"),
+            //System.Drawing.Image.FromFile("icon3.png"),ű
+            System.Drawing.Image.FromFile("icon5.png"),
             System.Drawing.Image.FromFile("icon4.png"),
 
         };
