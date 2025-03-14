@@ -68,6 +68,7 @@ namespace WindowsFormsApp1
         int bet = 0;
         public void Setup()
         {
+            this.BackColor = Color.FromArgb(51, 153, 255);
             // Setup the spin button
             spin.Location = new Point(0, 0);
             spin.AutoSize = true;
@@ -76,8 +77,9 @@ namespace WindowsFormsApp1
             Controls.Add(spin);
 
             Hitel.Text = "Hitel felvétele: ";
-            Hitel.Location = new Point(spin.Location.X + 150, minusbet2.Location.Y);
+            Hitel.Location = new Point(spin.Location.X + 100, minusbet2.Location.Y);
             Hitel.AutoSize = true;
+            Hitel.Enabled = false;
             Hitel.Click += (sender, e) =>
             {
                 Form3 form = new Form3();
