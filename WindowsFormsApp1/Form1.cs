@@ -73,10 +73,12 @@ namespace WindowsFormsApp1
             spin.Location = new Point(0, 0);
             spin.AutoSize = true;
             spin.Text = "Spin";
+            spin.BackColor = Color.White;
             spin.Click += Spin_Click;
             Controls.Add(spin);
 
             Hitel.Text = "Hitel felvétele: ";
+            Hitel.BackColor = Color.White;
             Hitel.Location = new Point(spin.Location.X + 100, minusbet2.Location.Y);
             Hitel.AutoSize = true;
             Hitel.Enabled = false;
@@ -100,7 +102,8 @@ namespace WindowsFormsApp1
             SetupBetButton(minusbet3, new Point(minusbet2.Location.X + 75, minusbet2.Location.Y), "-100000", -100000);
 
             helplabel.Text = "custom bet (1 - 99999999): ";
-            helplabel.Location = new Point(minusbet3.Location.X + 100, minusbet3.Location.Y + 10);
+            helplabel.Location = new Point(minusbet3.Location.X + 90, minusbet3.Location.Y + 10);
+            helplabel.ForeColor = Color.White;
             helplabel.AutoSize = true;
             Controls.Add(helplabel);
 
@@ -169,6 +172,7 @@ namespace WindowsFormsApp1
         {
             button.Location = location;
             button.Text = text;
+            button.BackColor = Color.White;
             button.Click += (sender, e) =>
             {
                 if (reset)
