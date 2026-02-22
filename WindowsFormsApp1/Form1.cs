@@ -50,11 +50,14 @@ namespace WindowsFormsApp1
         List<PictureBox> line3 = new List<PictureBox>() {seven, eight, nine};
 
         List<PictureBox> roow1 = new List<PictureBox>() {one, four, seven };
+
         List<PictureBox> roow2 = new List<PictureBox>() {two, five, eight };
         List<PictureBox> roow3 = new List<PictureBox>() {three, six, nine };
         List<PictureBox> diagonal1 = new List<PictureBox>() {one, five, nine};
         List<PictureBox> diagonal2 = new List<PictureBox>() {three, five, seven};
         List<PictureBox> allpic = new List<PictureBox>() { one, two, three, four, five, six, seven, eight, nine };
+
+
         Label lbl = new Label();
         Label result = new Label();
 
@@ -414,6 +417,7 @@ namespace WindowsFormsApp1
                 win = true;
             }
 
+
             return win;
         
         }
@@ -532,6 +536,22 @@ namespace WindowsFormsApp1
             Controls.Add(btn);
 
 
+            //oszlopok
+            if (roow1[0].BackColor == roow1[1].BackColor && roow1[1].BackColor == roow1[2].BackColor)
+            {
+                return "You win!";
+            }
+            if (roow2[0].BackColor == roow2[1].BackColor && roow2[1].BackColor == roow2[2].BackColor)
+            {
+                return "You win";
+            }
+            if (roow3[0].BackColor == roow3[1].BackColor && roow3[1].BackColor == roow3[2].BackColor)
+            {
+                return "You win!";
+            }
+
+            // Return the result
+            return message;
 
         }
 
