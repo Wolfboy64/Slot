@@ -45,17 +45,17 @@ namespace WindowsFormsApp1
         public static PictureBox eight = new PictureBox();
         public static PictureBox nine = new PictureBox();
 
-        List<PictureBox> line1 = new List<PictureBox>() {one, two, three};
-        List<PictureBox> line2 = new List<PictureBox>() {four, five, six};
-        List<PictureBox> line3 = new List<PictureBox>() {seven, eight, nine};
+        public static List<PictureBox> line1 = new List<PictureBox>() {one, two, three};
+        public static List<PictureBox> line2 = new List<PictureBox>() {four, five, six};
+        public static List<PictureBox> line3 = new List<PictureBox>() {seven, eight, nine};
 
-        List<PictureBox> roow1 = new List<PictureBox>() {one, four, seven };
+        public static List<PictureBox> row1 = new List<PictureBox>() {one, four, seven };
 
-        List<PictureBox> roow2 = new List<PictureBox>() {two, five, eight };
-        List<PictureBox> roow3 = new List<PictureBox>() {three, six, nine };
-        List<PictureBox> diagonal1 = new List<PictureBox>() {one, five, nine};
-        List<PictureBox> diagonal2 = new List<PictureBox>() {three, five, seven};
-        List<PictureBox> allpic = new List<PictureBox>() { one, two, three, four, five, six, seven, eight, nine };
+        public static List<PictureBox> row2 = new List<PictureBox>() {two, five, eight };
+        public static List<PictureBox> row3 = new List<PictureBox>() {three, six, nine };
+        public static List<PictureBox> diagonal1 = new List<PictureBox>() {one, five, nine};
+        public static List<PictureBox> diagonal2 = new List<PictureBox>() {three, five, seven};
+        public static List<PictureBox> allpic = new List<PictureBox>() { one, two, three, four, five, six, seven, eight, nine };
 
 
         Label lbl = new Label();
@@ -517,9 +517,9 @@ namespace WindowsFormsApp1
         Button btn = new Button();
         public Form3()
         {
-            Setup();
+            lbl.Text = Setup();
         }
-        public void Setup() 
+        public string Setup() 
         {
             this.AutoSize = true;
             this.Text = "Hitel felvétel";
@@ -535,19 +535,20 @@ namespace WindowsFormsApp1
             btn.Location = new Point(lbl.Location.X + 100, lbl.Location.Y);
             Controls.Add(btn);
 
+            string message = "Nem nyertél semmit!";
 
             //oszlopok
-            if (roow1[0].BackColor == roow1[1].BackColor && roow1[1].BackColor == roow1[2].BackColor)
+            if (row1[0].BackColor == row1[1].BackColor && row1[1].BackColor == row1[2].BackColor)
             {
-                return "You win!";
+                message = "You win!";
             }
-            if (roow2[0].BackColor == roow2[1].BackColor && roow2[1].BackColor == roow2[2].BackColor)
+            if (row2[0].BackColor == row2[1].BackColor && row2[1].BackColor == row2[2].BackColor)
             {
-                return "You win";
+                message = "You win";
             }
-            if (roow3[0].BackColor == roow3[1].BackColor && roow3[1].BackColor == roow3[2].BackColor)
+            if (row3[0].BackColor == row3[1].BackColor && row3[1].BackColor == row3[2].BackColor)
             {
-                return "You win!";
+                message = "You win!";
             }
 
             // Return the result
